@@ -3,130 +3,171 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Device Access Center</title>
 
 <style>
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #0b1020;
-  color: white;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0b1020;
+    color: white;
 }
 
 .container {
-  width: 92%;
-  max-width: 1000px;
-  margin: auto;
-  padding: 40px 0;
+    width: 92%;
+    max-width: 1000px;
+    margin: auto;
+    padding: 35px 0;
 }
 
 header {
-  text-align: center;
-  margin-bottom: 35px;
+    text-align: center;
+    margin-bottom: 30px;
 }
 
 h1 {
-  font-size: 34px;
-  margin-bottom: 10px;
+    font-size: 32px;
+    margin-bottom: 10px;
 }
 
 .subtitle {
-  color: #aeb7d0;
-  line-height: 1.6;
+    color: #aeb7d0;
+    line-height: 1.6;
 }
 
 .notice {
-  background: #151d35;
-  border: 1px solid #2c385c;
-  border-radius: 16px;
-  padding: 18px;
-  margin-bottom: 25px;
-  color: #cbd3e8;
-  line-height: 1.6;
+    background: #151d35;
+    border: 1px solid #2c385c;
+    border-radius: 15px;
+    padding: 18px;
+    margin-bottom: 25px;
+    line-height: 1.6;
+    color: #cbd3e8;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 18px;
+.mode-box {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
 }
 
 .card {
-  background: #141b30;
-  border: 1px solid #293452;
-  border-radius: 18px;
-  padding: 22px;
-}
-
-.icon {
-  font-size: 35px;
+    background: #141b30;
+    border: 1px solid #293452;
+    border-radius: 18px;
+    padding: 25px;
 }
 
 .card h2 {
-  font-size: 20px;
-  margin: 12px 0 8px;
+    margin-top: 0;
 }
 
 .card p {
-  color: #aeb7d0;
-  min-height: 48px;
+    color: #aeb7d0;
+    line-height: 1.6;
+}
+
+.icon {
+    font-size: 42px;
+    margin-bottom: 10px;
 }
 
 button {
-  width: 100%;
-  padding: 13px;
-  border: 0;
-  border-radius: 10px;
-  background: #5865f2;
-  color: white;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
+    width: 100%;
+    padding: 14px;
+    border: 0;
+    border-radius: 10px;
+    background: #5865f2;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 button:hover {
-  opacity: .9;
+    opacity: .9;
 }
 
-.stop {
-  background: #d94b5b;
-  margin-top: 20px;
+#devicePanel,
+#viewerPanel {
+    display: none;
+    margin-top: 25px;
+}
+
+.permissions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.permission {
+    background: #10172a;
+    border: 1px solid #293452;
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.permission h3 {
+    margin-top: 0;
 }
 
 .status {
-  margin-top: 25px;
-  background: #10172a;
-  border-radius: 15px;
-  padding: 18px;
-  border: 1px solid #293452;
+    margin-top: 20px;
+    padding: 16px;
+    background: #10172a;
+    border: 1px solid #293452;
+    border-radius: 12px;
 }
 
 .status span {
-  color: #69e28b;
-  font-weight: bold;
+    font-weight: bold;
 }
 
-.preview {
-  margin-top: 25px;
-  display: none;
+.video-area {
+    margin-top: 25px;
+    background: #05070d;
+    border-radius: 16px;
+    overflow: hidden;
 }
 
 video {
-  width: 100%;
-  max-height: 500px;
-  border-radius: 16px;
-  background: black;
+    width: 100%;
+    max-height: 600px;
+    display: block;
+    background: black;
+}
+
+.room {
+    margin-top: 20px;
+    padding: 18px;
+    background: #151d35;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.room-code {
+    font-size: 28px;
+    font-weight: bold;
+    letter-spacing: 5px;
+    margin-top: 10px;
+}
+
+.back {
+    margin-top: 20px;
+    background: #333b55;
 }
 
 footer {
-  text-align: center;
-  color: #7f8aa8;
-  margin-top: 35px;
-  font-size: 13px;
+    text-align: center;
+    color: #7f8aa8;
+    margin-top: 35px;
+    font-size: 13px;
 }
 </style>
 </head>
@@ -136,180 +177,447 @@ footer {
 <div class="container">
 
 <header>
-  <h1>Device Access Center</h1>
-  <div class="subtitle">
-    Test your device features with your permission.
-    Your browser will always ask before access is granted.
-  </div>
+    <h1>Device Access Center</h1>
+
+    <div class="subtitle">
+        Secure, consent-based access to your device.
+        Every permission must be approved by the device owner.
+    </div>
 </header>
 
 <div class="notice">
-  <strong>Privacy notice</strong><br>
-  Nothing is uploaded or stored by this page.
-  Camera, microphone, location and screen access are controlled by your browser.
+    <strong>Privacy notice</strong><br>
+    Camera, microphone, screen sharing, location and file access
+    require explicit permission from the user.
+    Nothing is accessed secretly or without browser approval.
 </div>
 
-<div class="grid">
+<!-- MODE SELECTION -->
 
-<div class="card">
-  <div class="icon">📷</div>
-  <h2>Camera</h2>
-  <p>Allow access to your camera and see a live preview.</p>
-  <button onclick="startCamera()">Allow Camera</button>
-</div>
+<div class="mode-box">
 
-<div class="card">
-  <div class="icon">🎤</div>
-  <h2>Microphone</h2>
-  <p>Request microphone permission from your browser.</p>
-  <button onclick="startMicrophone()">Allow Microphone</button>
-</div>
+    <div class="card">
+        <div class="icon">📱</div>
 
-<div class="card">
-  <div class="icon">📍</div>
-  <h2>Location</h2>
-  <p>Request your current location with your permission.</p>
-  <button onclick="getLocation()">Allow Location</button>
-</div>
+        <h2>Phone / Sender</h2>
 
-<div class="card">
-  <div class="icon">📁</div>
-  <h2>Files</h2>
-  <p>Select files manually from your device.</p>
-  <button onclick="chooseFiles()">Choose Files</button>
-  <input id="files" type="file" multiple hidden>
-</div>
+        <p>
+            Use this mode on the phone whose camera,
+            microphone, screen or location you want to share.
+        </p>
 
-<div class="card">
-  <div class="icon">🖥️</div>
-  <h2>Screen</h2>
-  <p>Share your screen or a selected window with permission.</p>
-  <button onclick="shareScreen()">Share Screen</button>
-</div>
+        <button onclick="openDevice()">
+            Use This Device
+        </button>
+    </div>
+
+    <div class="card">
+        <div class="icon">💻</div>
+
+        <h2>Computer / Viewer</h2>
+
+        <p>
+            Use this mode on the computer that will display
+            the information shared by the phone.
+        </p>
+
+        <button onclick="openViewer()">
+            Open Viewer
+        </button>
+    </div>
 
 </div>
 
-<div class="status">
-  <strong>Activity status:</strong>
-  <span id="status">Waiting for permission</span>
+
+<!-- PHONE PANEL -->
+
+<div id="devicePanel">
+
+    <div class="card">
+
+        <h2>📱 Phone Control Panel</h2>
+
+        <p>
+            Choose which features you want to share.
+            Your browser will ask for permission.
+        </p>
+
+        <div class="permissions">
+
+            <div class="permission">
+                <h3>📷 Camera</h3>
+                <button onclick="requestCamera()">
+                    Allow Camera
+                </button>
+            </div>
+
+            <div class="permission">
+                <h3>🎤 Microphone</h3>
+                <button onclick="requestMicrophone()">
+                    Allow Microphone
+                </button>
+            </div>
+
+            <div class="permission">
+                <h3>🖥️ Screen</h3>
+                <button onclick="requestScreen()">
+                    Share Screen
+                </button>
+            </div>
+
+            <div class="permission">
+                <h3>📍 Location</h3>
+                <button onclick="requestLocation()">
+                    Allow Location
+                </button>
+            </div>
+
+            <div class="permission">
+                <h3>📁 Files</h3>
+                <button onclick="requestFiles()">
+                    Choose Files
+                </button>
+
+                <input
+                    id="fileInput"
+                    type="file"
+                    multiple
+                    hidden
+                >
+            </div>
+
+        </div>
+
+        <div class="room">
+
+            <div>Connection Room</div>
+
+            <div class="room-code" id="roomCode">
+                ------
+            </div>
+
+            <p>
+                This room code will be used to connect
+                the phone with the computer.
+            </p>
+
+        </div>
+
+        <div class="status">
+            Status:
+            <span id="deviceStatus">
+                Waiting for permission
+            </span>
+        </div>
+
+        <div class="video-area">
+            <video
+                id="localVideo"
+                autoplay
+                muted
+                playsinline>
+            </video>
+        </div>
+
+        <button class="back" onclick="goBack()">
+            Back
+        </button>
+
+    </div>
+
 </div>
 
-<div class="preview" id="preview">
-  <video id="video" autoplay playsinline></video>
+
+<!-- VIEWER PANEL -->
+
+<div id="viewerPanel">
+
+    <div class="card">
+
+        <h2>💻 Computer Viewer</h2>
+
+        <p>
+            Enter the room code displayed on the phone.
+        </p>
+
+        <input
+            id="viewerRoom"
+            type="text"
+            maxlength="6"
+            placeholder="Enter room code"
+            style="
+                width:100%;
+                padding:14px;
+                border-radius:10px;
+                border:1px solid #293452;
+                background:#0b1020;
+                color:white;
+                margin-bottom:15px;
+                font-size:18px;
+                text-align:center;
+            "
+        >
+
+        <button onclick="connectViewer()">
+            Connect
+        </button>
+
+        <div class="status">
+            Status:
+            <span id="viewerStatus">
+                Waiting for connection
+            </span>
+        </div>
+
+        <div class="video-area">
+            <video
+                id="remoteVideo"
+                autoplay
+                playsinline>
+            </video>
+        </div>
+
+        <button class="back" onclick="goBack()">
+            Back
+        </button>
+
+    </div>
+
 </div>
 
-<button class="stop" onclick="stopAll()">Stop All Access</button>
 
 <footer>
-  Consent-based browser permissions only • No hidden access
+    Consent-based access only • No hidden access
 </footer>
 
 </div>
 
+
 <script>
 
-let streams = [];
+let localStream = null;
 
-function updateStatus(message) {
-  document.getElementById("status").textContent = message;
-}
 
-async function startCamera() {
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: true
-    });
+/* Generate room code */
 
-    streams.push(stream);
+function generateRoomCode() {
 
-    const video = document.getElementById("video");
-    video.srcObject = stream;
+    const characters = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
-    document.getElementById("preview").style.display = "block";
+    let code = "";
 
-    updateStatus("Camera access granted");
-  } catch (error) {
-    updateStatus("Camera permission denied or unavailable");
-  }
-}
-
-async function startMicrophone() {
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({
-      audio: true
-    });
-
-    streams.push(stream);
-
-    updateStatus("Microphone access granted");
-  } catch (error) {
-    updateStatus("Microphone permission denied or unavailable");
-  }
-}
-
-function getLocation() {
-  if (!navigator.geolocation) {
-    updateStatus("Location is not supported by this browser");
-    return;
-  }
-
-  navigator.geolocation.getCurrentPosition(
-    function(position) {
-      updateStatus(
-        "Location access granted: " +
-        position.coords.latitude.toFixed(4) +
-        ", " +
-        position.coords.longitude.toFixed(4)
-      );
-    },
-    function() {
-      updateStatus("Location permission denied or unavailable");
+    for (let i = 0; i < 6; i++) {
+        code += characters[
+            Math.floor(Math.random() * characters.length)
+        ];
     }
-  );
+
+    return code;
 }
 
-function chooseFiles() {
-  document.getElementById("files").click();
+
+/* Phone mode */
+
+function openDevice() {
+
+    document.querySelector(".mode-box").style.display = "none";
+
+    document.getElementById("devicePanel").style.display = "block";
+
+    document.getElementById("roomCode").textContent =
+        generateRoomCode();
+
 }
 
-document.getElementById("files").addEventListener("change", function() {
-  if (this.files.length > 0) {
-    updateStatus(this.files.length + " file(s) selected");
-  }
-});
 
-async function shareScreen() {
-  try {
-    const stream = await navigator.mediaDevices.getDisplayMedia({
-      video: true
-    });
+/* Computer mode */
 
-    streams.push(stream);
+function openViewer() {
 
-    const video = document.getElementById("video");
-    video.srcObject = stream;
+    document.querySelector(".mode-box").style.display = "none";
 
-    document.getElementById("preview").style.display = "block";
+    document.getElementById("viewerPanel").style.display = "block";
 
-    updateStatus("Screen sharing is active");
-  } catch (error) {
-    updateStatus("Screen sharing cancelled or unavailable");
-  }
 }
 
-function stopAll() {
-  streams.forEach(function(stream) {
-    stream.getTracks().forEach(function(track) {
-      track.stop();
-    });
-  });
 
-  streams = [];
+/* Camera */
 
-  document.getElementById("video").srcObject = null;
-  document.getElementById("preview").style.display = "none";
+async function requestCamera() {
 
-  updateStatus("All active access has been stopped");
+    try {
+
+        const stream =
+            await navigator.mediaDevices.getUserMedia({
+                video: true
+            });
+
+        localStream = stream;
+
+        document.getElementById("localVideo").srcObject =
+            stream;
+
+        document.getElementById("deviceStatus").textContent =
+            "Camera permission granted";
+
+    } catch (error) {
+
+        document.getElementById("deviceStatus").textContent =
+            "Camera permission denied";
+
+    }
+
+}
+
+
+/* Microphone */
+
+async function requestMicrophone() {
+
+    try {
+
+        const stream =
+            await navigator.mediaDevices.getUserMedia({
+                audio: true
+            });
+
+        if (!localStream) {
+
+            localStream = stream;
+
+        } else {
+
+            stream.getAudioTracks().forEach(track => {
+                localStream.addTrack(track);
+            });
+
+        }
+
+        document.getElementById("deviceStatus").textContent =
+            "Microphone permission granted";
+
+    } catch (error) {
+
+        document.getElementById("deviceStatus").textContent =
+            "Microphone permission denied";
+
+    }
+
+}
+
+
+/* Screen */
+
+async function requestScreen() {
+
+    try {
+
+        const stream =
+            await navigator.mediaDevices.getDisplayMedia({
+                video: true,
+                audio: true
+            });
+
+        document.getElementById("localVideo").srcObject =
+            stream;
+
+        document.getElementById("deviceStatus").textContent =
+            "Screen sharing started";
+
+    } catch (error) {
+
+        document.getElementById("deviceStatus").textContent =
+            "Screen sharing cancelled";
+
+    }
+
+}
+
+
+/* Location */
+
+function requestLocation() {
+
+    if (!navigator.geolocation) {
+
+        document.getElementById("deviceStatus").textContent =
+            "Location is not supported";
+
+        return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+
+        function(position) {
+
+            document.getElementById("deviceStatus").textContent =
+                "Location permission granted";
+
+        },
+
+        function() {
+
+            document.getElementById("deviceStatus").textContent =
+                "Location permission denied";
+
+        }
+
+    );
+
+}
+
+
+/* Files */
+
+function requestFiles() {
+
+    document.getElementById("fileInput").click();
+
+}
+
+document.getElementById("fileInput").addEventListener(
+    "change",
+    function() {
+
+        if (this.files.length > 0) {
+
+            document.getElementById("deviceStatus").textContent =
+                this.files.length +
+                " file(s) selected";
+
+        }
+
+    }
+);
+
+
+/* Viewer connection */
+
+function connectViewer() {
+
+    const code =
+        document.getElementById("viewerRoom").value.trim();
+
+    if (!code) {
+
+        document.getElementById("viewerStatus").textContent =
+            "Please enter a room code";
+
+        return;
+    }
+
+    document.getElementById("viewerStatus").textContent =
+        "Waiting for phone connection...";
+
+}
+
+
+/* Back */
+
+function goBack() {
+
+    location.reload();
+
 }
 
 </script>
